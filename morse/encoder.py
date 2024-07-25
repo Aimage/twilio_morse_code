@@ -1,15 +1,15 @@
-import sys, os
+import os
 import time
 from pydub import AudioSegment
 from pydub.playback import play
 from .code import CODE, SEVEN_UNITS, ONE_UNIT, THREE_UNITS
 
 
-def verify_message(string):
+def verify_message(message):
     is_message_valid = True
     error = ""
     keys = CODE.keys()
-    for char in string:
+    for char in message:
         if char.upper() not in keys and char != ' ':
             is_message_valid = False
             error = 'Error the charcter ' + char +' cannot be translated to Morse Code'
