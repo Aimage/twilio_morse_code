@@ -6,11 +6,15 @@ from .code import CODE, SEVEN_UNITS, ONE_UNIT, THREE_UNITS
 
 
 def verify_message(string):
+    is_message_valid = True
+    error = ""
     keys = CODE.keys()
     for char in string:
         if char.upper() not in keys and char != ' ':
-            sys.exit('Error the charcter ' + char +
-                     ' cannot be translated to Morse Code')
+            is_message_valid = False
+            error = 'Error the charcter ' + char +' cannot be translated to Morse Code'
+            break
+    return is_message_valid, error
 
 
 def message_to_morse_sound(message: str,

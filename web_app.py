@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request
 from twilio.rest import Client
-from morse.encoder import message_to_morse_sound
+from morse.encoder import message_to_morse_sound, verify_message
 from config import SOUND_BASE_PATH
 
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
@@ -35,6 +35,9 @@ def hello():
 @app.route("/tomorseaudio")
 def tomorseaudio():
     text = request.args.get("text", "")
+    is_valid, error = verify_message(text)
+    if not is_valid:
+        return error, 400
     if text:
         message_to_morse_sound(text, SOUND_BASE_PATH, "static/output.ogg")
     return f"'{text}' translated to morse code", 200
